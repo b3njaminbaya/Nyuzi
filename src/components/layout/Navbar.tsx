@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import CartSheet from "@/components/layout/CartSheet";
+import AuthDialog from "@/components/layout/AuthDialog";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +22,7 @@ const Navbar = () => {
             className="inline-block h-3 w-3 rounded-full bg-primary shadow-glow"
             aria-hidden
           />
-          <span>BenitoLoop</span>
+          <span>Nyuzi</span>
         </Link>
 
         {/* Desktop Menu */}
@@ -38,19 +40,25 @@ const Navbar = () => {
               {link.label}
             </NavLink>
           ))}
+          <CartSheet />
+          <AuthDialog />
           <Button asChild variant="hero" size="sm">
             <Link to="/donate">Donate Now</Link>
           </Button>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden flex items-center justify-center p-2 rounded-md hover:bg-muted"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Controls */}
+        <div className="md:hidden flex items-center gap-1">
+          <CartSheet />
+          <AuthDialog />
+          <button
+            className="flex items-center justify-center p-2 rounded-md hover:bg-muted"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Dropdown Menu */}

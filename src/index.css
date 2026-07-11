@@ -17,8 +17,14 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 160 84% 33%;
+    --primary: 123 46% 34%;
     --primary-foreground: 210 40% 98%;
+    --primary-light: 123 37% 74%;
+    --primary-dark: 124 50% 25%;
+
+    --gold: 45 100% 51%;
+    --gold-dark: 42 95% 47%;
+    --gold-foreground: 0 0% 10%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -55,9 +61,9 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Brand extensions */
-    --primary-glow: 160 84% 40%;
-    --primary-variant: 160 70% 46%;
-    --accent-emerald: 160 60% 45%;
+    --primary-glow: 124 70% 42%;
+    --primary-variant: 124 55% 46%;
+    --accent-emerald: 124 50% 45%;
 
     /* Gradients & Shadows */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-variant)));
@@ -79,8 +85,14 @@ All colors MUST be HSL.
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 160 84% 45%;
+    --primary: 123 46% 45%;
     --primary-foreground: 210 40% 98%;
+    --primary-light: 123 37% 64%;
+    --primary-dark: 124 50% 20%;
+
+    --gold: 45 100% 58%;
+    --gold-dark: 42 95% 52%;
+    --gold-foreground: 0 0% 10%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -107,9 +119,9 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Brand extensions */
-    --primary-glow: 160 84% 52%;
-    --primary-variant: 160 70% 50%;
-    --accent-emerald: 160 60% 50%;
+    --primary-glow: 124 70% 54%;
+    --primary-variant: 124 55% 52%;
+    --accent-emerald: 124 50% 52%;
 
     /* Gradients & Shadows */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-variant)));

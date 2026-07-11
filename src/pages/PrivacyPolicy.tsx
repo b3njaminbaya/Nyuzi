@@ -7,23 +7,23 @@ const PrivacyPolicy = () => {
     return (
         <div className="min-h-screen bg-gray-50 text-gray-800">
             <Seo
-                title="Privacy Policy — BenitoLoop"
-                description="Learn how BenitoLoop collects, uses, and protects your data."
-                canonical="/privacy"
+                title="Privacy Policy — Nyuzi"
+                description="Learn how Nyuzi collects, uses, and protects your data."
+                canonical="/privacypolicy"
                 jsonLd={{
                     "@context": "https://schema.org",
                     "@type": "WebPage",
-                    name: "Privacy Policy — BenitoLoop",
-                    url: "/privacy",
+                    name: "Privacy Policy — Nyuzi",
+                    url: "/privacypolicy",
                 }}
             />
 
             {/* Header */}
-            <section className="bg-[#2E7D32] text-white py-12 px-6 text-center">
+            <section className="bg-primary text-white py-12 px-6 text-center">
                 <h1 className="text-4xl font-bold">Privacy Policy</h1>
-                <p className="mt-2 text-[#FFC107]">Last updated: {updated}</p>
+                <p className="mt-2 text-gold">Last updated: {updated}</p>
                 <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-200">
-                    At BenitoLoop, we value your trust and are committed to safeguarding your personal information.
+                    At Nyuzi, we value your trust and are committed to safeguarding your personal information.
                 </p>
             </section>
 
@@ -33,11 +33,11 @@ const PrivacyPolicy = () => {
                 {/* Intro */}
                 <section className="bg-white shadow-md p-6 rounded-lg">
                     <div className="flex items-center gap-3">
-                        <FaShieldAlt className="text-[#2E7D32] text-2xl" />
-                        <h2 className="text-2xl font-semibold text-[#2E7D32]">Our Commitment</h2>
+                        <FaShieldAlt className="text-primary text-2xl" />
+                        <h2 className="text-2xl font-semibold text-primary">Our Commitment</h2>
                     </div>
                     <p className="mt-4 text-gray-600 leading-relaxed">
-                        This Privacy Policy explains how BenitoLoop collects, uses, stores, and protects your data.
+                        This Privacy Policy explains how Nyuzi collects, uses, stores, and protects your data.
                         We are transparent about our practices, and we respect your right to control your personal information.
                     </p>
                 </section>
@@ -45,8 +45,8 @@ const PrivacyPolicy = () => {
                 {/* Information We Collect */}
                 <section className="bg-white shadow-md p-6 rounded-lg">
                     <div className="flex items-center gap-3">
-                        <FaDatabase className="text-[#2E7D32] text-2xl" />
-                        <h2 className="text-2xl font-semibold text-[#2E7D32]">Information We Collect</h2>
+                        <FaDatabase className="text-primary text-2xl" />
+                        <h2 className="text-2xl font-semibold text-primary">Information We Collect</h2>
                     </div>
                     <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
                         <li>Account details such as your name, email address, and password (securely hashed).</li>
@@ -60,8 +60,8 @@ const PrivacyPolicy = () => {
                 {/* How We Use It */}
                 <section className="bg-white shadow-md p-6 rounded-lg">
                     <div className="flex items-center gap-3">
-                        <FaUserShield className="text-[#2E7D32] text-2xl" />
-                        <h2 className="text-2xl font-semibold text-[#2E7D32]">How We Use Your Information</h2>
+                        <FaUserShield className="text-primary text-2xl" />
+                        <h2 className="text-2xl font-semibold text-primary">How We Use Your Information</h2>
                     </div>
                     <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
                         <li>Facilitate donations, upcycling projects, and product purchases.</li>
@@ -75,8 +75,8 @@ const PrivacyPolicy = () => {
                 {/* Your Rights */}
                 <section className="bg-white shadow-md p-6 rounded-lg">
                     <div className="flex items-center gap-3">
-                        <FaEnvelope className="text-[#2E7D32] text-2xl" />
-                        <h2 className="text-2xl font-semibold text-[#2E7D32]">Your Rights & Choices</h2>
+                        <FaEnvelope className="text-primary text-2xl" />
+                        <h2 className="text-2xl font-semibold text-primary">Your Rights & Choices</h2>
                     </div>
                     <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
                         <li>Access and review your personal data at any time.</li>
@@ -90,8 +90,8 @@ const PrivacyPolicy = () => {
                 {/* Data Retention */}
                 <section className="bg-white shadow-md p-6 rounded-lg">
                     <div className="flex items-center gap-3">
-                        <FaRegClock className="text-[#2E7D32] text-2xl" />
-                        <h2 className="text-2xl font-semibold text-[#2E7D32]">Data Retention & Security</h2>
+                        <FaRegClock className="text-primary text-2xl" />
+                        <h2 className="text-2xl font-semibold text-primary">Data Retention & Security</h2>
                     </div>
                     <p className="mt-4 text-gray-600 leading-relaxed">
                         We retain your data only as long as necessary for the purposes outlined in this policy.
@@ -102,11 +102,11 @@ const PrivacyPolicy = () => {
 
                 {/* Contact */}
                 <section className="bg-white shadow-md p-6 rounded-lg text-center">
-                    <h2 className="text-2xl font-semibold text-[#2E7D32]">Contact Us</h2>
+                    <h2 className="text-2xl font-semibold text-primary">Contact Us</h2>
                     <p className="mt-4 text-gray-600">
                         If you have questions about our privacy practices, feel free to reach out to us.
                     </p>
-                    <p className="mt-2 font-semibold text-[#2E7D32]">
+                    <p className="mt-2 font-semibold text-primary">
                         Email: <a href="mailto:benitofashions2021@gmail.com" className="hover:underline">benitofashions2021@gmail.com</a>
                     </p>
                 </section>

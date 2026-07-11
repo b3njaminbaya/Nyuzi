@@ -7,12 +7,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="BenitoLoop — Circular Fashion & Upcycling"
+        title="Nyuzi — Circular Fashion & Upcycling"
         description="Donate, upcycle, and shop reclaimed fashion. Track CO₂, water, and landfill savings."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'BenitoLoop',
+          name: 'Nyuzi',
         }}
       />
 

@@ -1,7 +1,9 @@
 import Seo from "@/components/Seo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { toast } from "sonner";
 import { FaShoppingCart, FaLeaf, FaTint, FaRecycle } from "react-icons/fa";
+import { useCart } from "@/lib/cart-context";
 
 // Example placeholder images
 import denimTote from "@/assets/products/denim-tote.jpg";
@@ -18,7 +20,7 @@ const products = [
     impactLabel: "12 L water saved",
     category: "Bags",
     img: denimTote,
-    impactIcon: <FaTint className="text-[#2E7D32]" />,
+    impactIcon: <FaTint className="text-primary" />,
   },
   {
     id: 2,
@@ -28,7 +30,7 @@ const products = [
     impactLabel: "0.3 kg CO₂ avoided",
     category: "Clothing",
     img: patchworkJacket,
-    impactIcon: <FaLeaf className="text-[#2E7D32]" />,
+    impactIcon: <FaLeaf className="text-primary" />,
   },
   {
     id: 3,
@@ -38,7 +40,7 @@ const products = [
     impactLabel: "0.1 m³ landfill reduced",
     category: "Clothing",
     img: reclaimedTee,
-    impactIcon: <FaRecycle className="text-[#2E7D32]" />,
+    impactIcon: <FaRecycle className="text-primary" />,
   },
   {
     id: 4,
@@ -48,7 +50,7 @@ const products = [
     impactLabel: "Reclaimed leather",
     category: "Accessories",
     img: leatherWallet,
-    impactIcon: <FaRecycle className="text-[#2E7D32]" />,
+    impactIcon: <FaRecycle className="text-primary" />,
   },
 ];
 
@@ -63,6 +65,18 @@ const sortOptions = [
 const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("price-asc");
+  const { addItem } = useCart();
+
+  const handleAddToCart = (product: (typeof products)[number]) => {
+    addItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      img: product.img,
+      category: product.category,
+    });
+    toast.success(`Added "${product.title}" to cart`);
+  };
 
   const filteredProducts =
     selectedCategory === "All"
@@ -87,16 +101,16 @@ const Marketplace = () => {
   return (
     <div className="min-h-screen relative bg-white text-gray-900">
       <Seo
-        title="Marketplace — BenitoLoop"
+        title="Marketplace — Nyuzi"
         description="Shop unique upcycled products with transparent impact."
       />
 
       {/* Gradient edges */}
-      <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[#2E7D32] via-green-500 to-[#A5D6A7]" />
-      <div className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-[#A5D6A7] via-green-500 to-[#2E7D32]" />
+      <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-primary via-green-500 to-primary-light" />
+      <div className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-primary-light via-green-500 to-primary" />
 
       <div className="container mx-auto px-4 py-12 relative z-10">
-        <h1 className="text-4xl font-extrabold text-center md:text-left text-[#2E7D32]">
+        <h1 className="text-4xl font-extrabold text-center md:text-left text-primary">
           Marketplace
         </h1>
         <p className="mt-2 text-gray-600 text-center md:text-left max-w-2xl">
@@ -114,8 +128,8 @@ const Marketplace = () => {
                 size="sm"
                 onClick={() => setSelectedCategory(cat)}
                 className={`rounded-full px-4 ${selectedCategory === cat
-                    ? "bg-[#2E7D32] text-white"
-                    : "bg-transparent border border-[#2E7D32] text-[#2E7D32] hover:bg-[#2E7D32] hover:text-white"
+                    ? "bg-primary text-white"
+                    : "bg-transparent border border-primary text-primary hover:bg-primary hover:text-white"
                   }`}
               >
                 {cat}
@@ -128,7 +142,7 @@ const Marketplace = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="rounded-lg border border-[#2E7D32] bg-transparent text-[#2E7D32] px-3 py-2 text-sm outline-none hover:bg-[#2E7D32] hover:text-white transition"
+              className="rounded-lg border border-primary bg-transparent text-primary px-3 py-2 text-sm outline-none hover:bg-primary hover:text-white transition"
             >
               {sortOptions.map((option) => (
                 <option
@@ -148,7 +162,7 @@ const Marketplace = () => {
           {sortedProducts.map((p) => (
             <article
               key={p.id}
-              className="rounded-xl overflow-hidden border-2 border-[#2E7D32] bg-white shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
+              className="rounded-xl overflow-hidden border-2 border-primary bg-white shadow-md hover:shadow-xl transition-all hover:-translate-y-1"
             >
               <div className="relative w-full h-56">
                 <img
@@ -156,13 +170,13 @@ const Marketplace = () => {
                   alt={p.title}
                   className="w-full h-full object-cover"
                 />
-                <span className="absolute top-2 left-2 flex items-center gap-1 bg-[#FFC107] text-black text-xs font-semibold px-3 py-1 rounded-full shadow">
+                <span className="absolute top-2 left-2 flex items-center gap-1 bg-gold text-black text-xs font-semibold px-3 py-1 rounded-full shadow">
                   {p.impactIcon} {p.impactLabel}
                 </span>
               </div>
               <div className="p-4 flex flex-col justify-between h-36">
                 <div>
-                  <h3 className="font-semibold text-lg text-[#2E7D32]">
+                  <h3 className="font-semibold text-lg text-primary">
                     {p.title}
                   </h3>
                   <div className="mt-1 text-sm text-gray-600">{p.category}</div>
@@ -173,7 +187,8 @@ const Marketplace = () => {
                   </span>
                   <Button
                     size="sm"
-                    className="bg-[#2E7D32] text-white hover:bg-[#1B5E20] flex items-center gap-2"
+                    onClick={() => handleAddToCart(p)}
+                    className="bg-primary text-white hover:bg-primary-dark flex items-center gap-2"
                   >
                     <FaShoppingCart /> Add to cart
                   </Button>

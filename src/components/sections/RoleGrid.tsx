@@ -45,15 +45,15 @@ const RoleGrid = () => {
             return (
               <article
                 key={r.title}
-                className="group rounded-2xl border border-[#2E7D32]/20 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-[#FFC107]"
+                className="group rounded-2xl border border-primary/20 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-gold"
               >
                 {/* Icon */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2E7D32]/10 text-[#2E7D32] mb-5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-5">
                   <Icon size={24} />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-semibold text-[#2E7D32]">
+                <h3 className="text-xl font-semibold text-primary">
                   {r.title}
                 </h3>
 
@@ -66,7 +66,7 @@ const RoleGrid = () => {
                 <div className="mt-6">
                   <Button
                     asChild
-                    className="bg-[#2E7D32] hover:bg-[#256528] text-white font-medium"
+                    className="bg-primary hover:bg-primary-dark text-white font-medium"
                   >
                     <Link to={r.cta.to}>{r.cta.label}</Link>
                   </Button>

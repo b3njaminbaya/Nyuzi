@@ -6,6 +6,8 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/lib/cart-context";
+import { AuthProvider } from "@/lib/auth-context";
 import Index from "./pages/Index";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import NotFound from "./pages/NotFound";
@@ -23,22 +25,26 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Navbar />
-        <Suspense fallback={<div className="p-6 text-center text-muted-foreground">Loading…</div>}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/donate" element={<Donate />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/impact" element={<Impact />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/termsofservice" element={<TermsOfService />} />
-            <Route path="/partnerwithus" element={<PartnerWithUs />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Navbar />
+            <Suspense fallback={<div className="p-6 text-center text-muted-foreground">Loading…</div>}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/donate" element={<Donate />} />
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/impact" element={<Impact />} />
+                <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+                <Route path="/termsofservice" element={<TermsOfService />} />
+                <Route path="/partnerwithus" element={<PartnerWithUs />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            <Footer />
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

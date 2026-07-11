@@ -1,69 +1,36 @@
-# Benito Fashions Upcycling & Recycling App
+# Nyuzi
 
 ## Project Overview
-*Benito Fashions* is a sustainable fashion brand dedicated to promoting environmental conservation through the upcycling and recycling of textiles, shoes, clothing, and accessories. The goal is to create a platform that not only facilitates donations and collections of pre-owned items but also offers a marketplace for eco-friendly products made from waste materials like plastics, glass, and textile scraps.
+*Nyuzi* (Swahili for "thread") is a circular-fashion platform for donating, upcycling, and shopping reclaimed clothing, shoes, and accessories. The goal is a platform that connects donors, upcycling partners, and eco-conscious buyers — turning textile waste into new products, with every donation and purchase tracked against measurable environmental impact (CO₂, water, and landfill savings).
 
-This application serves as a bridge between eco-conscious consumers, environmentally active communities, and Benito Fashions' production unit—encouraging conscious consumption and promoting a circular economy. The Benito Fashions Recycling & Upcycling App aims to revolutionize sustainable fashion by providing an innovative platform for recycling and upcycling textile waste.
+This repository currently contains the **web frontend**: a marketing site and interactive prototype of the donation, marketplace, and impact-tracking experience. It is not yet connected to a backend, so no data is persisted — see [Current Status](#current-status) before treating anything here as production-ready.
 
 ---
 
 ## Table of Contents
-1. [Features](#features)
+1. [Current Status](#current-status)
 2. [Get Started](#get-started)
 3. [Technology Stack](#technology-stack)
-4. [Technical Specifications](#technical-specifications)
-5. [Architecture](#architecture)
-6. [Data Privacy & Compliance](#data-privacy--compliance)
-7. [Deployment](#deployment)
-8. [Future Enhancements](#future-enhancements)
-9. [Testing & Quality Assurance](#testing--quality-assurance)
-10. [Contributors](#contributors)
-11. [Contact](#contact)
-12. [License](#license)
-13. [Acknowledgments](#acknowledgments)
+4. [Project Structure](#project-structure)
+5. [Roadmap](#roadmap)
+6. [Testing & Quality Assurance](#testing--quality-assurance)
+7. [Contributors](#contributors)
+8. [Contact](#contact)
+9. [License](#license)
 
 ---
 
-## Features
+## Current Status
 
-1. **User Registration & Authentication**  
-   - Secure login and registration for different user roles: Donors, Buyers, Admins, and Upcycling Partners.
-   - Two-factor authentication (2FA) and OAuth for social login.
+This is a **frontend-only prototype**. What works today:
 
-2. **Item Donation Management**  
-   - Users can donate shoes, clothing, and accessories with detailed item descriptions.
-   - Donation scheduling for pickup or drop-off.
+- Marketing homepage, navigation, and responsive layout
+- Donation flow UI with a live impact estimator (client-side only)
+- Marketplace browse/filter/sort against a small fixed product set
+- Impact dashboard UI with charts (fixture data, not per-user)
+- Partner application page
 
-3. **Product Marketplace**  
-   - Listings of upcycled products: Upcycled footwear, eco-friendly clothing, and accessories.
-   - Product categorization, search, and filtering based on preferences.
-
-4. **Donation Tracking & Impact Visualization**  
-   - Track the journey of donated items, from collection to upcycling and sales.
-   - Visualization of environmental impact through CO₂ emissions saved, landfill space reduced, and water conserved.
-
-5. **AI-Based Sorting & Assessment**  
-   - AI models for automatic classification and sorting of donated items based on condition and material.
-
-6. **Payment Integration**  
-   - Support for multi-currency payments through Stripe, M-Pesa, and PayPal.
-   - Digital wallets and reward points for frequent donors and buyers.
-
-7. **Environmental Impact Dashboard**  
-   - Track and display individual and community contributions to sustainability.
-   - Set up campaigns and challenges for users to engage in.
-
-8. **Community Engagement Features**  
-   - User-generated content sections: blogs, photos, and stories.
-   - Voting and commenting on upcycled designs.
-
-9. **Referral and Rewards System**  
-   - Users earn rewards for referring friends, donating, or purchasing sustainable products.
-   - Leaderboards and badges for top contributors.
-
-10. **Admin Dashboard**  
-    - Manage inventory, donations, user activities, and site content.
-    - Generate reports on environmental impact, sales, and user engagement.
+What does **not** exist yet: user accounts, a database, payments, AI-based item classification, an admin dashboard, or any server. All of the above run entirely in the browser with no data persisted between visits. These are being built out in the order described in [Roadmap](#roadmap).
 
 ---
 
@@ -75,132 +42,75 @@ This application serves as a bridge between eco-conscious consumers, environment
    npm install
    ```
 
-2. **Start the app**
+2. **Run the dev server**
 
    ```bash
-   npx expo start
+   npm run dev
    ```
 
-   This will start the Expo development server. You'll see options to open the app in:
-   - [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
-   - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-   - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-   - [Expo Go](https://expo.dev/go)
+   This starts Vite on `http://localhost:8080`.
 
-   You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-3. **Get a fresh project**
-
-   When you're ready, run:
-
-   ```bash
-   npm run reset-project
-   ```
-
-   This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
----
-
-## Technology Stack
-
-- **Frontend**: React.js, Expo, HTML5, CSS3, JavaScript (ES6+), Redux for state management.
-- **Backend**: Node.js, Express.js for server-side logic.
-- **Database**: MongoDB (NoSQL) for storing user profiles, donations, and product inventory.
-- **Authentication**: JSON Web Tokens (JWT), OAuth 2.0.
-- **Machine Learning**: TensorFlow.js for AI-based sorting and condition assessment.
-- **Payments**: Stripe, M-Pesa API, and PayPal for handling transactions.
-- **Hosting**: AWS EC2, Netlify, or Heroku for deployment.
-- **Version Control**: GitHub for source code management.
-
----
-
-## Technical Specifications
-
-1. **Frontend**
-   - Reusable UI components for item listing, product detail pages, dashboards, and user profiles.
-   - Responsive Design with CSS Grid and Flexbox for desktop, tablet, and mobile screens.
-   - State Management using Redux for global state and async API calls.
-
-2. **Backend**
-   - RESTful API Design for CRUD operations on user profiles, donations, and products.
-   - Middleware: Express middleware for security (Helmet.js) and request validation.
-   - Microservices Architecture for donation, sorting, and marketplace modules.
-
-3. **Database**
-   - **MongoDB**: Collections for:
-     - **Users**: Profile information and activity logs.
-     - **Donations**: Item details, condition, and donor information.
-     - **Products**: Upcycled products and inventory management.
-     - **Transactions**: Payment records and donation receipts.
-
-4. **Machine Learning Models**
-   - **Item Condition Classification**: A convolutional neural network (CNN) for assessing item condition.
-   - **Material Identification**: Trained model for detecting material type (cotton, denim, leather, etc.).
-
----
-
-## Architecture
-
-- **Monolithic Application Structure**: Single codebase for easy development and deployment.
-- **Microservices Integration**: Separate services for AI models, user management, and e-commerce operations.
-- **API Gateway**: Centralized entry point for managing client-server interactions.
-- **Event-Driven Processing**: Asynchronous processing for handling donation and sales events.
-
----
-
-## Data Privacy & Compliance
-
-- **Data Encryption**: AES encryption for sensitive user data.
-- **User Consent Management**: Opt-in forms for data collection and cookie usage.
-- **Compliance**: Adherence to GDPR and the Kenya Data Protection Act.
-
----
-
-## Deployment
-
-- **CI/CD Pipelines**: Automated testing and deployment using GitHub Actions.
-- **Containerization**: Docker for containerized deployments.
-- **Load Balancing**: Nginx for managing incoming traffic.
-- **Monitoring**: New Relic for performance monitoring and alerting.
-
-- To deploy the app, use the following steps:
+3. **Build for production**
 
    ```bash
    npm run build
    ```
 
-- Follow specific deployment instructions for your platform (e.g., AWS EC2, Netlify).
+4. **Mobile builds (Capacitor)**
+
+   The web app is wrapped for iOS/Android via Capacitor. After `npm run build`, sync native projects with `npx cap sync`.
 
 ---
 
-## Future Enhancements
+## Technology Stack
 
-1. **Blockchain for Supply Chain Transparency**
-   - Implement blockchain technology to track the lifecycle of upcycled products.
+- **Frontend**: React 18, TypeScript, Vite
+- **UI**: shadcn/ui (Radix primitives) + Tailwind CSS, an HSL design-token system in `src/index.css`
+- **Routing**: React Router v6, with route-level code splitting
+- **Charts/animation**: Recharts, Framer Motion
+- **Mobile packaging**: Capacitor 6 (iOS/Android)
+- **Not yet integrated**: a backend/database, authentication, payments, and AI classification — see [Roadmap](#roadmap)
 
-2. **Mobile App Version**
-   - Launch iOS and Android apps for on-the-go usability.
+---
 
-3. **Social Impact Reporting**
-   - Tools for users to generate personalized impact reports.
+## Project Structure
 
-4. **Global Expansion & Localization**
-   - Expand to global markets with multi-language support and international shipping.
+```
+src/
+  components/
+    layout/      Navbar, Footer
+    sections/     Homepage sections (hero, impact stats, role grid)
+    ui/           shadcn/ui component primitives
+  pages/          Route-level pages (Donate, Marketplace, Impact, etc.)
+  lib/            Shared utilities
+  hooks/          Shared React hooks
+```
+
+---
+
+## Roadmap
+
+The longer-term product vision — the part of this project that isn't built yet:
+
+- **Accounts & roles** — Donor, Buyer, Partner, and Admin accounts with real authentication
+- **Backend & database** — persisted donations, listings, orders, and users
+- **AI-assisted item triage** — photo-based condition and material assessment to speed up donation intake
+- **Payments** — Stripe and M-Pesa for marketplace checkout
+- **Rewards & referrals** — points and recognition for donors and buyers
+- **Admin dashboard** — inventory, donation, and partner management
+- **Corporate impact reporting** — exportable sustainability reports for organizational donation drives
 
 ---
 
 ## Testing & Quality Assurance
 
-- **Unit Testing**: Jest and Mocha for testing React components and Node.js routes.
-- **Integration Testing**: Supertest for API testing.
-- **End-to-End Testing**: Selenium for browser automation.
-- **Security Testing**: Regular vulnerability scans using OWASP ZAP.
+Automated testing and CI are not yet set up — this is tracked as near-term work alongside the backend build-out.
 
 ---
 
 ## Contributors
 
-- **Benjamin Mweri Baya** - Project Lead & Founder.
+- **Benjamin Mweri Baya** — Project Lead & Founder
 
 ---
 
@@ -217,19 +127,8 @@ This application serves as a bridge between eco-conscious consumers, environment
 4. Push to the branch (e.g., `git push origin feature/new-feature`).
 5. Create a Pull Request.
 
-Please follow our [Coding Standards](link to standards) and run all tests before submitting your contributions.
-
 ---
 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
-
----
-
-## Acknowledgments
-
-- [Expo](https://expo.dev)
-- [TensorFlow.js](https://www.tensorflow.org/js)
-- [Moringa School](https://moringaschool.com)
-- [Inspirational Resource](link)

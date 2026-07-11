@@ -19,17 +19,17 @@ const ImpactStats = () => {
             return (
               <div
                 key={s.label}
-                className="rounded-xl border border-[#2E7D32]/20 bg-white p-6 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md"
+                className="rounded-xl border border-primary/20 bg-white p-6 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2E7D32]/10 text-[#2E7D32]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon size={20} />
                   </div>
                   <div className="text-sm font-medium text-[#1B1B1B]">
                     {s.label}
                   </div>
                 </div>
-                <div className="mt-3 text-3xl font-bold text-[#2E7D32]">
+                <div className="mt-3 text-3xl font-bold text-primary">
                   {s.value}
                 </div>
                 {s.sub && (
