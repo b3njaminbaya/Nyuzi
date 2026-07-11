@@ -1,5 +1,6 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,15 +13,16 @@ import { useCart } from "@/lib/cart-context";
 
 const CartSheet = () => {
   const { items, removeItem, updateQty, totalCount, totalPrice } = useCart();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCheckout = () => {
-    toast.info("Checkout isn't connected yet", {
-      description: "Your cart is saved on this device — real payments are coming soon.",
-    });
+    setOpen(false);
+    navigate("/checkout");
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative" aria-label="Open cart">
           <ShoppingCart size={20} />
@@ -33,7 +35,7 @@ const CartSheet = () => {
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader>
-          <SheetTitle>Your cart</SheetTitle>
+          <SheetTitle className="font-display">Your cart</SheetTitle>
         </SheetHeader>
 
         {items.length === 0 ? (

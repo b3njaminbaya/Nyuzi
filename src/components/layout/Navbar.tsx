@@ -17,12 +17,12 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 font-semibold">
+        <Link to="/" className="flex items-center gap-2">
           <span
-            className="inline-block h-3 w-3 rounded-full bg-primary shadow-glow"
+            className="inline-block h-2.5 w-2.5 rounded-full bg-gold"
             aria-hidden
           />
-          <span>Nyuzi</span>
+          <span className="font-display text-lg font-semibold tracking-tight">Nyuzi</span>
         </Link>
 
         {/* Desktop Menu */}

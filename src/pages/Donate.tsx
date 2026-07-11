@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +16,9 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import Seo from "@/components/Seo";
+import FormBanner, { type FormBannerState } from "@/components/FormBanner";
 import { submitDonation } from "@/lib/submissions";
+import { classifyDonationPhoto, type ClassificationSuggestion } from "@/lib/photo-classifier";
 import {
   FaTshirt,
   FaHandHoldingHeart,
@@ -28,7 +31,7 @@ const steps = [
   {
     icon: <FaTshirt className="text-3xl text-gold" />,
     title: "List Your Item",
-    description: "Upload photos and details so our AI can evaluate it.",
+    description: "Upload photos — an on-device scan suggests a category for you.",
   },
   {
     icon: <FaTruck className="text-3xl text-gold" />,
@@ -63,6 +66,10 @@ const IMPACT_BASE: Record<string, { water: number; co2: number; landfill: number
 const Donate = () => {
   const [condition, setCondition] = useState(70);
   const [category, setCategory] = useState("");
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [banner, setBanner] = useState<FormBannerState | null>(null);
+  const [suggestion, setSuggestion] = useState<ClassificationSuggestion | null>(null);
+  const [classifying, setClassifying] = useState(false);
   const photosRef = useRef<HTMLInputElement>(null);
   const pickupIntent = useRef(false);
 
@@ -75,6 +82,33 @@ const Donate = () => {
   } = useForm<DonationFormValues>({
     resolver: zodResolver(donationSchema),
   });
+
+  const photoPreviews = photos.map((file) => URL.createObjectURL(file));
+  useEffect(() => {
+    return () => photoPreviews.forEach((url) => URL.revokeObjectURL(url));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photos]);
+
+  const removePhoto = (index: number) => {
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handlePhotosChange = async (files: File[]) => {
+    setPhotos(files);
+    setSuggestion(null);
+    if (files.length === 0) return;
+    setClassifying(true);
+    const result = await classifyDonationPhoto(files[0]);
+    setClassifying(false);
+    setSuggestion(result);
+  };
+
+  const acceptSuggestion = () => {
+    if (!suggestion) return;
+    setCategory(suggestion.category);
+    setValue("category", suggestion.category, { shouldValidate: true });
+    setSuggestion(null);
+  };
 
   const impact = category
     ? (() => {
@@ -89,32 +123,36 @@ const Donate = () => {
     : null;
 
   const onSubmit = handleSubmit(async (values) => {
+    setBanner(null);
     const pickupRequested = pickupIntent.current;
     const { error } = await submitDonation({
       title: values.title,
       category: values.category,
       condition,
       notes: values.notes,
-      photoCount: photosRef.current?.files?.length ?? 0,
+      photoCount: photos.length,
       pickupRequested,
     });
 
     if (error) {
+      setBanner({ type: "error", title: "Couldn't save your donation", description: error });
       toast.error("Couldn't save your donation", { description: error });
       return;
     }
 
-    toast.success(
-      pickupRequested ? "Donation saved — pickup requested" : "Donation saved",
-      {
-        description:
-          "We'll follow up by email to coordinate collection; pickup scheduling is still manual for now.",
-      }
-    );
+    setBanner({
+      type: "success",
+      title: pickupRequested ? "Donation saved — pickup requested" : "Donation saved",
+      description:
+        "We'll follow up by email to coordinate collection; pickup scheduling is still manual for now.",
+    });
+    toast.success(pickupRequested ? "Donation saved — pickup requested" : "Donation saved");
 
     reset();
     setCategory("");
     setCondition(70);
+    setPhotos([]);
+    setSuggestion(null);
     pickupIntent.current = false;
     if (photosRef.current) photosRef.current.value = "";
   });
@@ -131,7 +169,7 @@ const Donate = () => {
         <h1 className="text-4xl font-extrabold text-center md:text-left">
           Start a Donation
         </h1>
-        <p className="mt-2 text-gray-200 text-center md:text-left max-w-2xl">
+        <p className="mt-2 text-primary-foreground/80 text-center md:text-left max-w-2xl">
           Give your clothes a second life — help the planet and earn rewards for
           contributing to a circular fashion economy.
         </p>
@@ -145,13 +183,19 @@ const Donate = () => {
             >
               <div className="flex justify-center mb-4">{step.icon}</div>
               <h3 className="text-lg font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-gray-200">{step.description}</p>
+              <p className="mt-2 text-sm text-primary-foreground/80">{step.description}</p>
             </div>
           ))}
         </div>
 
+        {banner && (
+          <div className="mt-10">
+            <FormBanner state={banner} />
+          </div>
+        )}
+
         {/* Form */}
-        <form className="mt-12 grid gap-8 md:grid-cols-3" onSubmit={onSubmit} noValidate>
+        <form className="mt-8 grid gap-8 md:grid-cols-3" onSubmit={onSubmit} noValidate>
           {/* Left Column */}
           <div className="space-y-6 bg-white/10 p-6 rounded-xl backdrop-blur-lg md:col-span-2">
             <div className="space-y-2">
@@ -162,11 +206,53 @@ const Donate = () => {
                 multiple
                 accept="image/*"
                 ref={photosRef}
+                onChange={(e) => handlePhotosChange(Array.from(e.target.files ?? []))}
                 className="bg-white text-black"
               />
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-primary-foreground/70">
                 Tip: Take clear, well-lit photos from multiple angles.
               </p>
+              {classifying && (
+                <p className="text-xs text-primary-foreground/70">Scanning photo on your device…</p>
+              )}
+              {suggestion && (
+                <div className="flex items-center gap-2 rounded-md bg-gold/15 border border-gold/30 px-3 py-2 text-sm">
+                  <span className="text-primary-foreground">
+                    Looks like <strong className="capitalize">{suggestion.category}</strong>{" "}
+                    <span className="text-primary-foreground/60">
+                      ({Math.round(suggestion.confidence * 100)}% match, on-device scan)
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={acceptSuggestion}
+                    className="ml-auto shrink-0 rounded-full bg-gold px-3 py-1 text-xs font-semibold text-gold-foreground hover:bg-gold-dark"
+                  >
+                    Use this
+                  </button>
+                </div>
+              )}
+              {photos.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {photoPreviews.map((url, index) => (
+                    <div key={url} className="relative">
+                      <img
+                        src={url}
+                        alt={`Selected photo ${index + 1}`}
+                        className="h-20 w-20 rounded-md object-cover border-2 border-white/40"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(index)}
+                        aria-label={`Remove photo ${index + 1}`}
+                        className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-gold text-gold-foreground"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -185,6 +271,7 @@ const Donate = () => {
             <div className="space-y-2">
               <Label>Category</Label>
               <Select
+                value={category}
                 onValueChange={(val) => {
                   setCategory(val);
                   setValue("category", val as DonationFormValues["category"], {
@@ -217,7 +304,7 @@ const Donate = () => {
                   onValueChange={(val) => setCondition(val[0])}
                 />
               </div>
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-primary-foreground/70">
                 0% = heavily worn, 100% = brand new
               </p>
             </div>
@@ -239,9 +326,9 @@ const Donate = () => {
                 onClick={() => {
                   pickupIntent.current = false;
                 }}
-                className="bg-gold text-black hover:bg-gold-dark w-full"
+                className="bg-gold text-gold-foreground hover:bg-gold-dark w-full"
               >
-                Continue
+                {isSubmitting ? "Saving…" : "Continue"}
               </Button>
               <Button
                 type="submit"
@@ -250,9 +337,9 @@ const Donate = () => {
                   pickupIntent.current = true;
                 }}
                 variant="outline"
-                className="border-gold text-gold hover:bg-gold hover:text-black w-full"
+                className="border-gold text-gold hover:bg-gold hover:text-gold-foreground w-full"
               >
-                Schedule Pickup
+                {isSubmitting ? "Saving…" : "Schedule Pickup"}
               </Button>
             </div>
           </div>
@@ -281,7 +368,7 @@ const Donate = () => {
                 </p>
               </div>
             ) : (
-              <p className="text-gray-300 mt-4 text-sm">
+              <p className="text-primary-foreground/70 mt-4 text-sm">
                 Select a category and condition to see your estimated impact.
               </p>
             )}
@@ -294,7 +381,7 @@ const Donate = () => {
           <h3 className="mt-4 text-xl font-semibold">
             Every Donation Makes an Impact
           </h3>
-          <p className="mt-2 text-sm text-gray-200 max-w-lg mx-auto">
+          <p className="mt-2 text-sm text-primary-foreground/80 max-w-lg mx-auto">
             By donating, you’re reducing landfill waste, saving water, and
             avoiding CO₂ emissions. Nyuzi tracks your contributions so you
             can see your positive footprint grow.

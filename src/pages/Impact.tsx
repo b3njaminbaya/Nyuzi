@@ -1,64 +1,75 @@
+import { useEffect, useState } from "react";
 import Seo from "@/components/Seo";
 import { motion } from "framer-motion";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { FaLeaf, FaTint, FaRecycle, FaTshirt } from "react-icons/fa";
 import { MdHistory, MdTrendingUp, MdCheckCircle } from "react-icons/md";
+import {
+  getImpactTotals,
+  getImpactTrend,
+  getRecentDonationActivity,
+  type ImpactTotals,
+  type ImpactTrendPoint,
+  type RecentDonationActivity,
+} from "@/lib/impact";
+import { formatCO2, formatLandfill, formatWater } from "@/lib/format-impact";
 
-const lifetimeData = [
-  {
-    label: "CO₂ avoided",
-    value: "1.2 t",
-    color: "#FFC107",
-    icon: <FaLeaf className="text-2xl" />,
-    description: "Equivalent to 2,800 km driven by car",
-  },
-  {
-    label: "Water saved",
-    value: "18k L",
-    color: "#03A9F4",
-    icon: <FaTint className="text-2xl" />,
-    description: "Enough to fill 90 bathtubs",
-  },
-  {
-    label: "Landfill reduced",
-    value: "4.3 m³",
-    color: "#8BC34A",
-    icon: <FaRecycle className="text-2xl" />,
-    description: "Equal to 70 large trash bins",
-  },
-  {
-    label: "Items processed",
-    value: "27",
-    color: "#FF5722",
-    icon: <FaTshirt className="text-2xl" />,
-    description: "Donated, upcycled, or resold",
-  },
+const GOALS = [
+  { label: "Save 25k L of water", target: 25000, metric: "water_l" as const },
+  { label: "Avoid 2 t of CO₂ emissions", target: 2000, metric: "co2_kg" as const },
+  { label: "Reduce landfill by 6 m³", target: 6, metric: "landfill_m3" as const },
 ];
 
-const recentActivity = [
-  { text: "Donation collected • 2 jackets, 1 pair of jeans", icon: <MdCheckCircle className="text-primary" /> },
-  { text: "AI sorting complete • Recommended: Upcycle", icon: <MdCheckCircle className="text-primary" /> },
-  { text: "Order shipped • Upcycled Denim Tote", icon: <MdCheckCircle className="text-primary" /> },
-  { text: "New marketplace listing • Patchwork Jacket", icon: <MdCheckCircle className="text-primary" /> },
-];
-
-const upcomingGoals = [
-  { goal: "Save 25k L of water", progress: 72 },
-  { goal: "Avoid 2 t of CO₂ emissions", progress: 60 },
-  { goal: "Reduce landfill by 6 m³", progress: 71 },
-];
-
-const impactTrends = [
-  { month: "Jan", CO2: 0.3, Water: 4, Landfill: 1 },
-  { month: "Feb", CO2: 0.6, Water: 7, Landfill: 1.5 },
-  { month: "Mar", CO2: 0.9, Water: 12, Landfill: 2.3 },
-  { month: "Apr", CO2: 1.1, Water: 15, Landfill: 3.2 },
-  { month: "May", CO2: 1.2, Water: 18, Landfill: 4.3 },
-];
+const statusLabel = (status: string) => {
+  const map: Record<string, string> = {
+    submitted: "Donation submitted",
+    scheduled: "Pickup scheduled",
+    collected: "Donation collected",
+    processed: "Donation processed",
+  };
+  return map[status] ?? status;
+};
 
 const Impact = () => {
+  const [totals, setTotals] = useState<ImpactTotals | null>(null);
+  const [trend, setTrend] = useState<ImpactTrendPoint[]>([]);
+  const [activity, setActivity] = useState<RecentDonationActivity[]>([]);
+
+  useEffect(() => {
+    getImpactTotals().then(({ totals }) => setTotals(totals));
+    getImpactTrend().then(({ data }) => setTrend(data));
+    getRecentDonationActivity().then(({ data }) => setActivity(data));
+  }, []);
+
+  const lifetimeData = [
+    {
+      label: "CO₂ avoided",
+      value: totals ? formatCO2(totals.co2_kg) : "—",
+      color: "#BF5B3D",
+      icon: <FaLeaf className="text-2xl" />,
+    },
+    {
+      label: "Water saved",
+      value: totals ? formatWater(totals.water_l) : "—",
+      color: "#3E8E8C",
+      icon: <FaTint className="text-2xl" />,
+    },
+    {
+      label: "Landfill reduced",
+      value: totals ? formatLandfill(totals.landfill_m3) : "—",
+      color: "#7A8F5C",
+      icon: <FaRecycle className="text-2xl" />,
+    },
+    {
+      label: "Items processed",
+      value: totals ? String(totals.items_count) : "—",
+      color: "#C08A2E",
+      icon: <FaTshirt className="text-2xl" />,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-white text-primary-dark">
+    <div className="min-h-screen bg-background">
       <Seo
         title="Impact Dashboard — Nyuzi"
         description="Track CO₂, water, and landfill savings from your donations and purchases."
@@ -72,9 +83,9 @@ const Impact = () => {
           transition={{ duration: 0.6 }}
           className="text-center md:text-left"
         >
-          <h1 className="text-4xl font-extrabold">Impact Dashboard</h1>
-          <p className="mt-2 text-gray-700">
-            Your contributions to a circular fashion economy are making a real difference.
+          <h1 className="text-4xl font-semibold">Impact Dashboard</h1>
+          <p className="mt-2 text-muted-foreground">
+            Community-wide totals from every donation that's been collected and processed so far.
           </p>
         </motion.div>
 
@@ -86,17 +97,16 @@ const Impact = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="rounded-xl bg-white text-black p-6 shadow-md flex flex-col items-center text-center border-2 border-primary hover:shadow-lg transition-all"
+              className="rounded-lg bg-card p-6 shadow-sm flex flex-col items-center text-center border border-border hover:shadow-md transition-all"
             >
               <div
                 className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
-                style={{ backgroundColor: `${item.color}22`, color: item.color }}
+                style={{ backgroundColor: `${item.color}1F`, color: item.color }}
               >
                 {item.icon}
               </div>
-              <h3 className="text-2xl font-bold">{item.value}</h3>
-              <p className="text-sm font-medium text-gray-700">{item.label}</p>
-              <p className="mt-2 text-xs text-gray-500">{item.description}</p>
+              <h3 className="text-2xl font-display font-semibold">{item.value}</h3>
+              <p className="text-sm font-medium text-foreground">{item.label}</p>
             </motion.div>
           ))}
         </div>
@@ -106,43 +116,53 @@ const Impact = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mt-12 rounded-xl bg-white p-6 border-2 border-primary shadow-md"
+          className="mt-12 rounded-lg bg-card p-6 border border-border shadow-sm"
         >
-          <h2 className="flex items-center gap-2 text-xl font-semibold">
-            <MdTrendingUp className="text-primary" /> Upcoming Goals
+          <h2 className="flex items-center gap-2 text-xl font-display font-semibold">
+            <MdTrendingUp className="text-primary" /> Community Goals
           </h2>
           <div className="mt-6 space-y-6">
-            {upcomingGoals.map((goal, index) => (
-              <div key={index}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>{goal.goal}</span>
-                  <span>{goal.progress}%</span>
+            {GOALS.map((goal, index) => {
+              const current = totals ? totals[goal.metric] : 0;
+              const progress = Math.min(100, Math.round((current / goal.target) * 100));
+              return (
+                <div key={goal.label}>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span>{goal.label}</span>
+                    <span className="text-muted-foreground">{progress}%</span>
+                  </div>
+                  <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progress}%` }}
+                      transition={{ duration: 1, delay: index * 0.2 }}
+                      className="h-3 rounded-full bg-primary"
+                    ></motion.div>
+                  </div>
                 </div>
-                <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${goal.progress}%` }}
-                    transition={{ duration: 1, delay: index * 0.2 }}
-                    className="h-3 rounded-full bg-primary"
-                  ></motion.div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Impact Trend Chart */}
-          <div className="mt-10 h-64 bg-gray-50 rounded-xl p-4 border border-primary">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={impactTrends}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.1)" />
-                <XAxis dataKey="month" stroke="hsl(var(--primary))" />
-                <YAxis stroke="hsl(var(--primary))" />
-                <Tooltip contentStyle={{ backgroundColor: "hsl(var(--primary))", border: "none", color: "#fff" }} />
-                <Line type="monotone" dataKey="CO2" stroke="hsl(var(--gold))" strokeWidth={2} dot />
-                <Line type="monotone" dataKey="Water" stroke="#03A9F4" strokeWidth={2} dot />
-                <Line type="monotone" dataKey="Landfill" stroke="#8BC34A" strokeWidth={2} dot />
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="mt-10 h-64 bg-muted/50 rounded-lg p-4 border border-border">
+            {trend.length === 0 ? (
+              <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                Not enough collected donations yet to show a trend.
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={trend}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" />
+                  <Tooltip contentStyle={{ backgroundColor: "hsl(var(--primary))", border: "none", color: "hsl(var(--primary-foreground))" }} />
+                  <Line type="monotone" dataKey="co2_kg" name="CO₂ (kg)" stroke="#BF5B3D" strokeWidth={2} dot />
+                  <Line type="monotone" dataKey="water_l" name="Water (L)" stroke="#3E8E8C" strokeWidth={2} dot />
+                  <Line type="monotone" dataKey="landfill_m3" name="Landfill (m³)" stroke="#7A8F5C" strokeWidth={2} dot />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </motion.section>
 
@@ -152,40 +172,44 @@ const Impact = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="rounded-xl bg-white p-6 border-2 border-primary shadow-md"
+            className="rounded-lg bg-card p-6 border border-border shadow-sm"
           >
-            <h2 className="flex items-center gap-2 text-xl font-semibold">
+            <h2 className="flex items-center gap-2 text-xl font-display font-semibold">
               <MdHistory className="text-primary" /> Recent Activity
             </h2>
-            <ul className="mt-4 space-y-3 text-sm text-gray-700">
-              {recentActivity.map((activity, index) => (
-                <li
-                  key={index}
-                  className="p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition flex items-center gap-2 border border-primary/40"
-                >
-                  {activity.icon} {activity.text}
-                </li>
-              ))}
-            </ul>
+            {activity.length === 0 ? (
+              <p className="mt-4 text-sm text-muted-foreground">No donations yet — be the first.</p>
+            ) : (
+              <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                {activity.map((item, index) => (
+                  <li
+                    key={index}
+                    className="p-3 rounded-md bg-muted/50 hover:bg-muted transition flex items-center gap-2 border border-border capitalize"
+                  >
+                    <MdCheckCircle className="text-primary shrink-0" />
+                    {statusLabel(item.status)} · {item.category}
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.section>
 
           <motion.section
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="rounded-xl bg-white p-6 border-2 border-primary shadow-md"
+            className="rounded-lg bg-card p-6 border border-border shadow-sm"
           >
-            <h2 className="text-xl font-semibold">Why Your Impact Matters</h2>
-            <p className="mt-4 text-sm text-gray-700">
+            <h2 className="text-xl font-display font-semibold">Why Your Impact Matters</h2>
+            <p className="mt-4 text-sm text-muted-foreground">
               Every item you donate or purchase reduces demand for virgin
               materials, saves precious water, and prevents greenhouse gas
               emissions. Together, we are building a truly circular fashion
               economy.
             </p>
-            <p className="mt-4 text-sm text-gray-700">
-              Nyuzi ensures transparency by tracking the lifecycle of every
-              item you interact with. Your personal dashboard is updated in
-              real-time to show your tangible contributions.
+            <p className="mt-4 text-sm text-muted-foreground">
+              These totals only include donations that have actually been collected and processed —
+              not just submitted — so every number here reflects real, completed impact.
             </p>
           </motion.section>
         </div>
@@ -197,12 +221,15 @@ const Impact = () => {
           transition={{ duration: 0.8 }}
           className="mt-12 text-center"
         >
-          <h3 className="text-xl font-semibold text-primary">
+          <h3 className="text-xl font-display font-semibold text-primary">
             Keep up the momentum — every action counts!
           </h3>
-          <button className="mt-4 bg-primary text-white font-semibold px-6 py-3 rounded-full hover:bg-primary-dark transition">
+          <a
+            href="/donate"
+            className="mt-4 inline-block bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-full hover:bg-primary-dark transition"
+          >
             Make Another Contribution
-          </button>
+          </a>
         </motion.div>
       </div>
     </div>
@@ -210,7 +237,3 @@ const Impact = () => {
 };
 
 export default Impact;
-
-
-
-

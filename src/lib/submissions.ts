@@ -50,3 +50,22 @@ export async function submitNewsletterSignup(email: string) {
   }
   return { error: error?.message ?? null };
 }
+
+export type MyDonation = {
+  id: string;
+  title: string;
+  category: string;
+  condition: number;
+  status: "submitted" | "scheduled" | "collected" | "processed";
+  pickup_requested: boolean;
+  created_at: string;
+};
+
+export async function listMyDonations(userId: string) {
+  const { data, error } = await supabase
+    .from("donations")
+    .select("id, title, category, condition, status, pickup_requested, created_at")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+  return { data: (data as MyDonation[] | null) ?? [], error: error?.message ?? null };
+}

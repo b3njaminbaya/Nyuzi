@@ -1,62 +1,67 @@
 import React from "react";
-import hero from "@/assets/hero-illustration.svg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import denimTote from "@/assets/products/denim-tote.jpg";
+import patchworkJacket from "@/assets/products/patchwork-jacket.jpg";
+import reclaimedTee from "@/assets/products/reclaimed-tee.jpg";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative overflow-hidden bg-white">
-      {/* Gradient Border on Edges */}
-      <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-primary via-green-500 to-primary-light" />
-      <div className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-primary-light via-green-500 to-primary" />
-
-      <div className="container mx-auto grid items-center gap-12 px-6 py-16 md:grid-cols-2 lg:py-24">
+    <section className="relative overflow-hidden bg-background">
+      <div className="container mx-auto grid items-center gap-16 px-6 py-20 md:grid-cols-2 lg:py-28">
         {/* Left Content */}
         <div className="relative z-10 text-center md:text-left">
-          <h1 className="text-4xl font-extrabold sm:text-5xl lg:text-6xl leading-tight">
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gold-dark">
+            Nyuzi — Swahili for "thread"
+          </span>
+          <h1 className="mt-5 text-4xl leading-[1.1] font-semibold sm:text-5xl lg:text-6xl">
             Circular fashion,{" "}
-            <span className="bg-gradient-to-r from-primary to-green-500 bg-clip-text text-transparent">
-              reimagined
-            </span>{" "}
-            with Nyuzi
+            <span className="text-gold">rewoven</span> for the everyday
           </h1>
-          <p className="mt-4 text-lg text-gray-700 max-w-lg mx-auto md:mx-0">
+          <p className="mt-5 text-lg text-muted-foreground max-w-lg mx-auto md:mx-0">
             Donate items, fuel upcycling, and shop reclaimed designs — while
             tracking your CO₂, water, and landfill impact.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary hover:bg-primary-dark text-white font-semibold shadow-lg"
-            >
+          <div className="mt-9 flex flex-wrap justify-center md:justify-start gap-4">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold">
               <Link to="/donate">Start a Donation</Link>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="border-primary text-primary hover:bg-primary hover:text-white font-semibold"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
             >
               <Link to="/marketplace">Explore Marketplace</Link>
             </Button>
           </div>
 
-          <p className="mt-4 text-sm text-gray-500">
+          <p className="mt-5 text-sm text-muted-foreground">
             Secure. Community-driven. Planet-positive.
           </p>
         </div>
 
-        {/* Right Image */}
-        <div className="relative">
-          <div className="rounded-2xl border-4 border-primary bg-white shadow-2xl p-4">
-            <img
-              src={hero}
-              alt="Nyuzi upcycling workspace with reclaimed garments"
-              className="w-full rounded-lg object-contain"
-            />
-          </div>
+        {/* Right: product collage instead of a generic diagram */}
+        <div className="relative h-[420px] hidden md:block" aria-hidden>
+          <img
+            src={patchworkJacket}
+            alt=""
+            className="absolute left-0 top-0 h-64 w-52 rotate-[-6deg] rounded-lg border-4 border-card object-cover shadow-elegant"
+          />
+          <img
+            src={denimTote}
+            alt=""
+            className="absolute right-4 top-10 h-56 w-52 rotate-[4deg] rounded-lg border-4 border-card object-cover shadow-elegant"
+          />
+          <img
+            src={reclaimedTee}
+            alt=""
+            className="absolute bottom-0 left-20 h-52 w-48 rotate-[3deg] rounded-lg border-4 border-card object-cover shadow-elegant"
+          />
+          <span className="absolute right-10 bottom-6 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-gold-foreground shadow-elegant">
+            18k L water saved so far
+          </span>
         </div>
       </div>
     </section>
@@ -64,6 +69,3 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
-
-
-

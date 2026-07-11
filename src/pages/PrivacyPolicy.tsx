@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
     const updated = new Date().toISOString().split("T")[0];
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-800">
+        <div className="min-h-screen bg-background text-foreground">
             <Seo
                 title="Privacy Policy — Nyuzi"
                 description="Learn how Nyuzi collects, uses, and protects your data."
@@ -19,10 +19,10 @@ const PrivacyPolicy = () => {
             />
 
             {/* Header */}
-            <section className="bg-primary text-white py-12 px-6 text-center">
+            <section className="bg-primary text-primary-foreground py-12 px-6 text-center">
                 <h1 className="text-4xl font-bold">Privacy Policy</h1>
                 <p className="mt-2 text-gold">Last updated: {updated}</p>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-200">
+                <p className="mt-4 max-w-2xl mx-auto text-lg text-primary-foreground/70">
                     At Nyuzi, we value your trust and are committed to safeguarding your personal information.
                 </p>
             </section>
@@ -31,24 +31,24 @@ const PrivacyPolicy = () => {
             <div className="container mx-auto px-4 py-10 space-y-12 max-w-5xl">
 
                 {/* Intro */}
-                <section className="bg-white shadow-md p-6 rounded-lg">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg">
                     <div className="flex items-center gap-3">
                         <FaShieldAlt className="text-primary text-2xl" />
                         <h2 className="text-2xl font-semibold text-primary">Our Commitment</h2>
                     </div>
-                    <p className="mt-4 text-gray-600 leading-relaxed">
+                    <p className="mt-4 text-muted-foreground leading-relaxed">
                         This Privacy Policy explains how Nyuzi collects, uses, stores, and protects your data.
                         We are transparent about our practices, and we respect your right to control your personal information.
                     </p>
                 </section>
 
                 {/* Information We Collect */}
-                <section className="bg-white shadow-md p-6 rounded-lg">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg">
                     <div className="flex items-center gap-3">
                         <FaDatabase className="text-primary text-2xl" />
                         <h2 className="text-2xl font-semibold text-primary">Information We Collect</h2>
                     </div>
-                    <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
+                    <ul className="list-disc pl-6 mt-4 space-y-2 text-muted-foreground">
                         <li>Account details such as your name, email address, and password (securely hashed).</li>
                         <li>Donation and purchase information, including item descriptions and delivery addresses.</li>
                         <li>Usage data such as pages visited, time spent, and device/browser details.</li>
@@ -58,12 +58,12 @@ const PrivacyPolicy = () => {
                 </section>
 
                 {/* How We Use It */}
-                <section className="bg-white shadow-md p-6 rounded-lg">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg">
                     <div className="flex items-center gap-3">
                         <FaUserShield className="text-primary text-2xl" />
                         <h2 className="text-2xl font-semibold text-primary">How We Use Your Information</h2>
                     </div>
-                    <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
+                    <ul className="list-disc pl-6 mt-4 space-y-2 text-muted-foreground">
                         <li>Facilitate donations, upcycling projects, and product purchases.</li>
                         <li>Provide personalized recommendations and enhance your experience.</li>
                         <li>Process transactions and manage your account.</li>
@@ -73,12 +73,12 @@ const PrivacyPolicy = () => {
                 </section>
 
                 {/* Your Rights */}
-                <section className="bg-white shadow-md p-6 rounded-lg">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg">
                     <div className="flex items-center gap-3">
                         <FaEnvelope className="text-primary text-2xl" />
                         <h2 className="text-2xl font-semibold text-primary">Your Rights & Choices</h2>
                     </div>
-                    <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
+                    <ul className="list-disc pl-6 mt-4 space-y-2 text-muted-foreground">
                         <li>Access and review your personal data at any time.</li>
                         <li>Update or correct your information through your account settings.</li>
                         <li>Request data deletion or restriction of processing.</li>
@@ -88,12 +88,12 @@ const PrivacyPolicy = () => {
                 </section>
 
                 {/* Data Retention */}
-                <section className="bg-white shadow-md p-6 rounded-lg">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg">
                     <div className="flex items-center gap-3">
                         <FaRegClock className="text-primary text-2xl" />
                         <h2 className="text-2xl font-semibold text-primary">Data Retention & Security</h2>
                     </div>
-                    <p className="mt-4 text-gray-600 leading-relaxed">
+                    <p className="mt-4 text-muted-foreground leading-relaxed">
                         We retain your data only as long as necessary for the purposes outlined in this policy.
                         Advanced encryption, firewalls, and monitoring tools are used to ensure your data’s safety.
                         While we take strong precautions, no method of transmission over the internet is 100% secure.
@@ -101,9 +101,9 @@ const PrivacyPolicy = () => {
                 </section>
 
                 {/* Contact */}
-                <section className="bg-white shadow-md p-6 rounded-lg text-center">
+                <section className="bg-card border border-border shadow-sm p-6 rounded-lg text-center">
                     <h2 className="text-2xl font-semibold text-primary">Contact Us</h2>
-                    <p className="mt-4 text-gray-600">
+                    <p className="mt-4 text-muted-foreground">
                         If you have questions about our privacy practices, feel free to reach out to us.
                     </p>
                     <p className="mt-2 font-semibold text-primary">

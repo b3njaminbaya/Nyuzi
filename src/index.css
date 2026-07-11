@@ -2,68 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Nyuzi design system — grounded in the material this platform actually
+deals in: indigo (denim, the most common upcycled textile) as primary,
+burnt terracotta (natural dye pigment) as accent, on a warm undyed-canvas
+neutral instead of stark white. All colors MUST be HSL. */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 40 22% 97%;
+    --foreground: 220 25% 13%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 20% 99%;
+    --card-foreground: 220 25% 13%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 20% 99%;
+    --popover-foreground: 220 25% 13%;
 
-    --primary: 123 46% 34%;
-    --primary-foreground: 210 40% 98%;
-    --primary-light: 123 37% 74%;
-    --primary-dark: 124 50% 25%;
+    --primary: 219 42% 28%;
+    --primary-foreground: 40 20% 97%;
+    --primary-light: 219 35% 80%;
+    --primary-dark: 220 48% 18%;
 
-    --gold: 45 100% 51%;
-    --gold-dark: 42 95% 47%;
-    --gold-foreground: 0 0% 10%;
+    --gold: 14 52% 49%;
+    --gold-dark: 14 55% 40%;
+    --gold-foreground: 40 20% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 219 20% 94%;
+    --secondary-foreground: 220 25% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 15% 93%;
+    --muted-foreground: 220 10% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 219 20% 94%;
+    --accent-foreground: 220 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 46%;
+    --destructive-foreground: 40 20% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 100 20% 35%;
+    --success-foreground: 40 20% 97%;
+
+    --border: 220 15% 87%;
+    --input: 220 15% 87%;
+    --ring: 219 42% 28%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 40 20% 98%;
+    --sidebar-foreground: 220 15% 30%;
+    --sidebar-primary: 219 42% 28%;
+    --sidebar-primary-foreground: 40 20% 97%;
+    --sidebar-accent: 219 20% 94%;
+    --sidebar-accent-foreground: 220 25% 15%;
+    --sidebar-border: 220 15% 87%;
+    --sidebar-ring: 219 42% 28%;
 
     /* Brand extensions */
-    --primary-glow: 124 70% 42%;
-    --primary-variant: 124 55% 46%;
-    --accent-emerald: 124 50% 45%;
+    --primary-glow: 219 55% 40%;
+    --primary-variant: 219 45% 38%;
+    --accent-emerald: 14 52% 49%;
 
     /* Gradients & Shadows */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-variant)));
@@ -71,62 +68,70 @@ All colors MUST be HSL.
     --shadow-elevated: 0 12px 30px -10px hsl(var(--primary) / 0.25);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.45);
 
+    /* Type */
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+    --font-body: "Karla", ui-sans-serif, system-ui, sans-serif;
+
     /* Motion */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222 30% 8%;
+    --foreground: 40 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 222 28% 11%;
+    --card-foreground: 40 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 222 28% 11%;
+    --popover-foreground: 40 20% 95%;
 
-    --primary: 123 46% 45%;
-    --primary-foreground: 210 40% 98%;
-    --primary-light: 123 37% 64%;
-    --primary-dark: 124 50% 20%;
+    --primary: 219 50% 58%;
+    --primary-foreground: 222 30% 8%;
+    --primary-light: 219 40% 40%;
+    --primary-dark: 220 55% 75%;
 
-    --gold: 45 100% 58%;
-    --gold-dark: 42 95% 52%;
-    --gold-foreground: 0 0% 10%;
+    --gold: 14 65% 60%;
+    --gold-dark: 14 65% 68%;
+    --gold-foreground: 222 30% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 222 20% 17%;
+    --secondary-foreground: 40 20% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 222 20% 17%;
+    --muted-foreground: 220 12% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 222 20% 17%;
+    --accent-foreground: 40 20% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 40 20% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --success: 100 25% 55%;
+    --success-foreground: 222 30% 8%;
+
+    --border: 222 20% 20%;
+    --input: 222 20% 20%;
+    --ring: 219 50% 58%;
+
+    --sidebar-background: 222 28% 10%;
+    --sidebar-foreground: 40 15% 88%;
+    --sidebar-primary: 219 50% 58%;
+    --sidebar-primary-foreground: 222 30% 8%;
+    --sidebar-accent: 222 20% 17%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 222 20% 20%;
+    --sidebar-ring: 219 50% 58%;
 
     /* Brand extensions */
-    --primary-glow: 124 70% 54%;
-    --primary-variant: 124 55% 52%;
-    --accent-emerald: 124 50% 52%;
+    --primary-glow: 219 60% 65%;
+    --primary-variant: 219 50% 55%;
+    --accent-emerald: 14 65% 60%;
 
     /* Gradients & Shadows */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-variant)));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--card)), hsl(var(--background)));
-    --shadow-elevated: 0 12px 30px -10px hsl(var(--primary) / 0.25);
+    --shadow-elevated: 0 12px 30px -10px hsl(var(--primary) / 0.35);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.45);
 
     /* Motion */
@@ -141,5 +146,10 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
   }
 }

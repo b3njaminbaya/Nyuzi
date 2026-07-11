@@ -25,19 +25,19 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#1B1B1B] text-white pt-12">
+    <footer className="bg-primary-dark text-primary-foreground pt-12">
       <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
 
         {/* Brand Info */}
         <div>
-          <div className="flex items-center gap-2 font-bold text-xl text-gold">
+          <div className="flex items-center gap-2 font-display text-xl font-semibold text-gold">
             <span
-              className="inline-block h-3 w-3 rounded-full bg-primary shadow"
+              className="inline-block h-3 w-3 rounded-full bg-gold shadow"
               aria-hidden
             />
             Nyuzi
           </div>
-          <p className="mt-4 text-sm text-gray-300 leading-relaxed">
+          <p className="mt-4 text-sm text-primary-foreground/70 leading-relaxed">
             Circular fashion made simple. Donate, upcycle, and shop reclaimed
             designs — helping the planet one outfit at a time.
           </p>
@@ -108,7 +108,7 @@ const Footer = () => {
         {/* Newsletter */}
         <div>
           <h4 className="font-semibold text-gold mb-3">Stay Updated</h4>
-          <p className="text-sm text-gray-300 mb-4">
+          <p className="text-sm text-primary-foreground/70 mb-4">
             Subscribe to our newsletter for the latest in sustainable fashion.
           </p>
           <form
@@ -123,12 +123,12 @@ const Footer = () => {
               placeholder="Your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 rounded-md border border-gray-600 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold"
+              className="flex-1 rounded-md border border-primary-foreground/30 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold"
               required
             />
             <button
               type="submit"
-              className="bg-primary hover:bg-primary-dark px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              className="bg-gold hover:bg-gold-dark text-gold-foreground px-4 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Subscribe
             </button>
@@ -137,7 +137,7 @@ const Footer = () => {
       </div>
 
       {/* Social Media */}
-      <div className="mt-10 border-t border-gray-700 pt-6">
+      <div className="mt-10 border-t border-primary-foreground/20 pt-6">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex space-x-5">
             <a
@@ -193,7 +193,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className="mt-6 bg-[#111] py-4 text-center text-xs text-gray-500">
+      <div className="mt-6 bg-primary-dark/60 py-4 text-center text-xs text-primary-foreground/50">
         © {new Date().getFullYear()} Nyuzi — All rights reserved.
       </div>
     </footer>

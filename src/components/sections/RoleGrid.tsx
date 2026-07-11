@@ -16,7 +16,7 @@ const roles = [
     cta: { label: "Start Shopping", to: "/marketplace" },
   },
   {
-    title: "PartnerWithUs",
+    title: "Partners",
     desc: "Join as an upcycling studio or recycler to process donated items, manage batches, and create products with purpose.",
     icon: Factory,
     cta: { label: "Partner With Us", to: "/partnerwithus" },
@@ -25,14 +25,14 @@ const roles = [
 
 const RoleGrid = () => {
   return (
-    <section className="py-14 bg-[#F7FDF8]">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <div className="mb-10 text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#1B1B1B]">
-            Built for the Loop
+          <h2 className="text-3xl font-semibold text-foreground">
+            Built for the loop
           </h2>
-          <p className="mt-3 text-[#4B5563]">
+          <p className="mt-3 text-muted-foreground">
             Donors, buyers, and partners working together to keep fashion
             waste-free. Choose your role and join the movement.
           </p>
@@ -45,7 +45,7 @@ const RoleGrid = () => {
             return (
               <article
                 key={r.title}
-                className="group rounded-2xl border border-primary/20 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-gold"
+                className="group rounded-xl border border-border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-gold/50"
               >
                 {/* Icon */}
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-5">
@@ -53,12 +53,12 @@ const RoleGrid = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-semibold text-primary">
+                <h3 className="text-xl font-display font-semibold text-primary">
                   {r.title}
                 </h3>
 
                 {/* Description */}
-                <p className="mt-3 text-sm text-[#4B5563] leading-relaxed">
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                   {r.desc}
                 </p>
 
@@ -66,7 +66,7 @@ const RoleGrid = () => {
                 <div className="mt-6">
                   <Button
                     asChild
-                    className="bg-primary hover:bg-primary-dark text-white font-medium"
+                    className="bg-primary hover:bg-primary-dark text-primary-foreground font-medium"
                   >
                     <Link to={r.cta.to}>{r.cta.label}</Link>
                   </Button>
@@ -81,4 +81,3 @@ const RoleGrid = () => {
 };
 
 export default RoleGrid;
-
